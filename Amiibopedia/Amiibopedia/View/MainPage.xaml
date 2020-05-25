@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms" xmlns:behaviorsPack="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack"
+             mc:Ignorable="d"
+             x:Class="Amiibopedia.MainPage"
+             Title="Amiibopedia">
+    <Grid>
+        <StackLayout>
+            <!--<SearchBar Placeholder="Busca tu Amiibo"
+                       SearchCommand="{Binding SearchCommand}"
+                       x:Name="Search"
+                       SearchCommandParameter="{Binding Text, Source={x:Reference Search}}"></SearchBar>-->
+
+            <autocomplete:SfAutoComplete HeightRequest="40"
+                                         DataSource="{Binding Characters}"
+                                         DisplayMemberPath="name"
+                                         Watermark="¡Busca tu Amiibo!">
+                <autocomplete:SfAutoComplete.Behaviors>
+                    <behaviorsPack:EventToCommandBehavior EventName="SelectionChanged"
+                                                          Command="{Binding SearchCommand}"
+                                                          EventArgsPropertyPath="Value">
+                    </behaviorsPack:EventToCommandBehavior>
+                </autocomplete:SfAutoComplete.Behaviors>
+            </autocomplete:SfAutoComplete>
+        
+            <ListView
+                ItemsSource="{Binding Amiibos}"
+                RowHeight="300">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Appearing="ViewCell_Appearing">
+                            <Frame CornerRadius="5"
+                                   Margin="5"
+                                   BackgroundColor="Beige">
+                                <StackLayout>
+                                    <Image Source="{Binding image}"
+                                           HeightRequest="100"></Image>
+                                        <Label Text="{Binding name, StringFormat='Nombre del personaje: {0}'}"
+                                               FontSize="Large"
+                                               HorizontalTextAlignment="Center"></Label>
+                                        <Label Text="{Binding gameSeries, StringFormat='Serie de juego: {0}'}"></Label>
+                                        <Label Text="{Binding character, StringFormat='Personaje: {0}'}"></Label>
+                                        <Label Text="Fecha de lanzamiento EEUU:"></Label>
+                                        <Label Text="{Binding Amiibos.amiibo[0].release.eu, StringFormat='Fecha release EEUU: {0}'}"></Label>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <!--<ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Mario</x:String>
+                        <x:String>Mario2</x:String>
+                        <x:String>Mario3</x:String>
+                        <x:String>Mario4</x:String>
+                        <x:String>Mario5</x:String>
+                        <x:String>Mario6</x:String>
+                    </x:Array>
+                </ListView.ItemsSource>-->
+            </ListView>
+        </StackLayout>
+        <Grid Opacity="0.8"
+              BackgroundColor="Black"
+              IsVisible="{Binding IsBusy}">
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               HorizontalOptions="Center"></ActivityIndicator>
+        </Grid>
+    </Grid>
+</ContentPage>
