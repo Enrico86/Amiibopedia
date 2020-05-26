@@ -44,7 +44,7 @@
                                         <Label Text="{Binding gameSeries, StringFormat='Serie de juego: {0}'}"></Label>
                                         <Label Text="{Binding character, StringFormat='Personaje: {0}'}"></Label>
                                         <Label Text="Fecha de lanzamiento EEUU:"></Label>
-                                        <Label Text="{Binding Amiibos.amiibo[0].release.eu, StringFormat='Fecha release EEUU: {0}'}"></Label>
+                                        <Label Text="{Binding release.eu, StringFormat='Fecha release EEUU: {0}'}"></Label>
                                 </StackLayout>
                             </Frame>
                         </ViewCell>

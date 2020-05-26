@@ -25,8 +25,15 @@ namespace Amiibopedia
         {
             base.OnAppearing();
             ViewModel = new MainPageViewModel();
+            //Instanciamos nuestro ViewModel
             await ViewModel.LoadCharacters();
+            //Con la instancia del ViewModel invocamos el método LoadCharacters para cargar todos los personajes en nuestra
+            //ObservableCollection (Characters)
             this.BindingContext = ViewModel;
+            //Y ahora le decimos que el BindingContext del View es nuestro ViewModel. Es importante el orden, ya que si definimos
+            //antes el BindingContext y luego invocamos el método LoadCharacters, si necesitara más adelante visualizar estos elementos
+            //en nuestro View tendría problemas, ya que cuando se establezca el BindingContext todavía no habría nada en nuestra 
+            //ObservableCollection.
 
         }
 
